@@ -87,6 +87,6 @@ _And all their maintainers and contributors!_
 
 ## License
 
-This project is licensed under the GPLv3 License. See the [LICENSE](./LICENSE) file for full details.
+This project is licensed under the AGPLv3 License. See the [LICENSE](./LICENSE) file for full details.
 
-By contributing to this project, you agree that your contributions will be licensed under the GPLv3 License as well.
+By contributing to this project, you agree that your contributions will be licensed under the AGPLv3 License as well.
