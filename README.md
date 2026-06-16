@@ -1,5 +1,9 @@
 <p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/logo-full-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="src/assets/icon-full.png">
   <img src="src/assets/icon-full.png" alt="BJobs Enhancer Logo" width="250">
+</picture>
 </p>
 
 # bjobs enhancer
