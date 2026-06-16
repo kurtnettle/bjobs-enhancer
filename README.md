@@ -17,13 +17,13 @@ A lightweight browser extension designed to upgrade the user experience on [bdjo
 ## Extension in Action
 
 <p align="center">
-  <video src="./docs/demo.0.mp4" width="100%" controls></video>
+  <img src="./docs/demo.0.webp" alt="extension in action">
 </p>
 
 ### Tweak the way you want to hide a job post
 
 <p align="center">
-  <video src="./docs/demo.1.mp4" width="100%" controls></video>
+  <img src="./docs/demo.1.webp" alt="tweak hide option">
 </p>
 
 
@@ -87,6 +87,6 @@ _And all their maintainers and contributors!_
 
 ## License
 
-This project is licensed under the GPLv3 License. See the LICENSE file for full details.
+This project is licensed under the GPLv3 License. See the [LICENSE](./LICENSE) file for full details.
 
 By contributing to this project, you agree that your contributions will be licensed under the GPLv3 License as well.
