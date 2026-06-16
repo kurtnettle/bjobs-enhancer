@@ -1,0 +1,7 @@
+.job-card-hidden {
+    display: none !important;
+}
+
+.job-card-faded {
+    opacity: var(--jobs-bd-user-card-opacity, 0.3) !important;
+}
