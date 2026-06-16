@@ -17,6 +17,14 @@ export default defineConfig({
       'alarms',
       'storage',
     ],
+    browser_specific_settings: {
+      gecko: {
+        id: '{9025100f-9751-4986-925e-0f47733a4cc5}',
+        data_collection_permissions: {
+          required: ['none'],
+        },
+      },
+    },
   },
   alias: {
     $lib: lib,
