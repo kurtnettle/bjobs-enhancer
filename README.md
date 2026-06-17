@@ -6,6 +6,25 @@
 </picture>
 </p>
 
+<br>
+
+<p align="center">
+  <a href="https://addons.mozilla.org/en-US/firefox/addon/bjobs-enhancer/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./docs/firefox-addon-dark.webp">
+      <source media="(prefers-color-scheme: light)" srcset="./docs/firefox-addon-light.webp">
+      <img src="./docs/firefox-addon-light.webp" alt="Get Firefox Addon" width="130">
+    </picture>
+  </a>
+  <a href="https://chromewebstore.google.com/detail/oeodfjgmkhmbaeaaldafblknnclgfhda/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./docs/chrome-extension-dark.webp">
+      <source media="(prefers-color-scheme: light)" srcset="./docs/chrome-extension-light.webp">
+      <img src="./docs/chrome-extension-dark.webp" alt="Get Chrome Extension" width="200">
+    </picture>
+  </a>  
+</p>
+
 # bjobs enhancer
 
 A lightweight browser extension designed to upgrade the user experience on [bdjobs](https://bdjobs.com/)
