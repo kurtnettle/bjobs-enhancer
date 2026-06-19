@@ -34,7 +34,7 @@ A lightweight browser extension designed to upgrade the user experience on [bdjo
 
 * **Hide Job Cards:** Declutter your job list by hiding specific job postings you aren't interested in.
 
-* **Automatic Space Saver:** Hidden jobs older than 2 months are automatically cleared from your local storage every 24 hours.
+* **Automatic Space Saver:** Hidden jobs are automatically removed from storage after their post deadline has passed.
 
 
 ## Extension in Action
