@@ -25,6 +25,20 @@ const hiddenJobCardOpacity = storage.defineItem<number>(
   },
 )
 
+const hiddenJobIdsCount = storage.defineItem<number>(
+  'local:jobs_hidden_count',
+  {
+    fallback: 0,
+  },
+)
+
+const cleanedJobIdsCount = storage.defineItem<number>(
+  'local:jobs_cleaned_count',
+  {
+    fallback: 0,
+  },
+)
+
 export const hiddenJobsStore = storage.defineItem<Record<string, Job>>(
   'local:hidden_jobs_map',
   {
@@ -38,6 +52,11 @@ async function hideJobById(id: string, deadline: Date): Promise<void> {
     return
 
   const currentMap = await hiddenJobsStore.getValue()
+  if (!currentMap[cleanId]) {
+    await hiddenJobIdsCount.setValue(
+      await hiddenJobIdsCount.getValue() + 1,
+    )
+  }
 
   currentMap[cleanId] = { expiresAt: deadline.getTime() }
 
@@ -63,6 +82,8 @@ async function unhideJobById(id: string): Promise<void> {
   delete currentMap[cleanId]
 
   await hiddenJobsStore.setValue(currentMap)
+  const count = await hiddenJobIdsCount.getValue()
+  await hiddenJobIdsCount.setValue(Math.max(0, count - 1))
 }
 
 async function setHiddenJobCardOpacity(value: string | number) {
@@ -86,6 +107,7 @@ async function cleanObsoleteJobIds(): Promise<void> {
       if (currentMap[id].expiresAt < cutoffTime) {
         delete currentMap[id]
         itemsRemoved++
+        await cleanedJobIdsCount.setValue(await cleanedJobIdsCount.getValue() + 1)
       }
     }
 
@@ -99,8 +121,10 @@ async function cleanObsoleteJobIds(): Promise<void> {
   }
 }
 export {
+  cleanedJobIdsCount,
   cleanObsoleteJobIds,
   hiddenJobCardOpacity,
+  hiddenJobIdsCount,
   hideJobById,
   Job,
   JobCardHideMode,
