@@ -1,7 +1,7 @@
 {
   "name": "bjobs-enhancer",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Improve your BDJobs browsing experience.",
   "author": "Shaikh Shafeen <shafeen@duck.com> (https://github.com/kurtnettle)",
   "license": "GPL-3.0-only",
