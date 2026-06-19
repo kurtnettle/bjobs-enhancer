@@ -35,7 +35,7 @@
         <div class='space-y-0.5'>
           <p class='text-sm font-medium'>Hidden Jobs</p>
           <p class='text-xs text-muted-foreground'>
-            Auto-cleans ids > 2 months old
+            Auto-cleans job IDs after their deadline
           </p>
         </div>
         <span class='text-2xl font-bold tracking-tight text-primary'

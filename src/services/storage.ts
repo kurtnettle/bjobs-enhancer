@@ -1,10 +1,9 @@
-import { STORAGE_CONFIG } from '@/config/constants'
 import { error, info, warn } from './logging'
 
 const TAG = '[Storage]'
 
 interface Job {
-  hiddenAt: number
+  expiresAt: number
 }
 
 enum JobCardHideMode {
@@ -33,14 +32,14 @@ export const hiddenJobsStore = storage.defineItem<Record<string, Job>>(
   },
 )
 
-async function hideJobById(id: string): Promise<void> {
+async function hideJobById(id: string, deadline: Date): Promise<void> {
   const cleanId = id.trim()
   if (!cleanId)
     return
 
   const currentMap = await hiddenJobsStore.getValue()
 
-  currentMap[cleanId] = { hiddenAt: Date.now() }
+  currentMap[cleanId] = { expiresAt: deadline.getTime() }
 
   await hiddenJobsStore.setValue(currentMap)
 }
@@ -77,14 +76,14 @@ async function setHiddenJobCardOpacity(value: string | number) {
 }
 
 async function cleanObsoleteJobIds(): Promise<void> {
-  const cutoffTime = Date.now() - STORAGE_CONFIG.BLACKLIST_PURGE_AGE_MS
+  const cutoffTime = Date.now() - 24 * 60 * 60 * 1000
 
   try {
     const currentMap = await hiddenJobsStore.getValue()
     let itemsRemoved = 0
 
     for (const id in currentMap) {
-      if (currentMap[id].hiddenAt < cutoffTime) {
+      if (currentMap[id].expiresAt < cutoffTime) {
         delete currentMap[id]
         itemsRemoved++
       }

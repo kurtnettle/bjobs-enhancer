@@ -1,6 +1,7 @@
 import { CONTEXT_MENU_IDS, MenuMessageType } from '@/config/constants'
 import { debug, error, warn } from '@/services/logging'
 import { hideJobById, unhideJobById } from '@/services/storage'
+import { parseBnDateString } from '@/utils/date'
 
 const TAG = '[ContextMenu]'
 
@@ -44,10 +45,10 @@ async function onContextMenuClick(
     }
 
     const { jobId, isHidden, deadLine } = context
-
+    const parsedDeadline = parseBnDateString(deadLine)
     if (!isHidden) {
       debug(TAG, ' Hiding job:', jobId, deadLine)
-      await hideJobById(jobId)
+      await hideJobById(jobId, parsedDeadline)
     }
     else {
       debug(TAG, ' Unhiding job:', jobId, deadLine, deadLine)
