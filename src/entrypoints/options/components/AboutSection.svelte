@@ -4,15 +4,23 @@
   import * as Tooltip from '$lib/components/ui/tooltip/index.js'
   import Bug from '@lucide/svelte/icons/bug'
   import CodeXml from '@lucide/svelte/icons/code-xml'
+  import { formatDistanceToNow } from 'date-fns'
   import { onMount } from 'svelte'
-  import { EXTENSION_LINKS } from '@/config/constants'
-  import { cleanedJobIdsCount, hiddenJobIdsCount, hiddenJobsStore } from '@/services/storage'
+  import { EXTENSION_LINKS, STORAGE_CONFIG } from '@/config/constants'
+  import {
+    cleanedJobIdsCount,
+    getObsoleteJobIdsCount,
+    hiddenJobIdsCount,
+    hiddenJobsStore,
+  } from '@/services/storage'
 
   const version = browser.runtime.getManifest().version
 
   let hiddenCount = 0
   let hiddenJobsCount = 0
   let cleanedCount = 0
+  let jobIdsToRemove = $state(0)
+  let nextAutoCleanAt = $state('soon')
 
   hiddenJobIdsCount.watch((value) => {
     hiddenJobsCount = value
@@ -27,6 +35,13 @@
     cleanedCount = await cleanedJobIdsCount.getValue()
     const currentMap = await hiddenJobsStore.getValue()
     hiddenCount = Object.keys(currentMap).length
+    jobIdsToRemove = await getObsoleteJobIdsCount()
+    const alarm = await browser.alarms.get(STORAGE_CONFIG.CLEAN_ALARM_NAME)
+    if (alarm) {
+      nextAutoCleanAt = formatDistanceToNow(alarm.scheduledTime, {
+        addSuffix: true,
+      })
+    }
   })
 </script>
 
@@ -48,7 +63,7 @@
         <div class='space-y-0.5'>
           <p class='text-sm font-medium'>Currently Hidden</p>
           <p class='text-xs text-muted-foreground'>
-            Auto-cleans job IDs after their deadline
+            Next auto-clean {nextAutoCleanAt} • {jobIdsToRemove} job IDs to remove
           </p>
         </div>
         <span class='text-2xl font-bold tracking-tight text-primary'

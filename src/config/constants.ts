@@ -4,6 +4,7 @@ const EXTENSION_LINKS = {
 } as const
 
 const STORAGE_CONFIG = {
+  CLEAN_ALARM_NAME: 'bjobs_daily_cleanup_alarm',
   BLACKLIST_PURGE_AGE_MS: 2 * 30 * 24 * 3600 * 1000, // 2 months
   CLEAN_ALARM_MINUTES: 24 * 60, // 24 hours
 } as const

@@ -11,10 +11,10 @@ export default defineBackground({
 
 async function initCleanUpAlarm() {
   browser.runtime.onInstalled.addListener(async () => {
-    const existingAlarm = await browser.alarms.get('bjobs_daily_cleanup_alarm')
+    const existingAlarm = await browser.alarms.get(STORAGE_CONFIG.CLEAN_ALARM_NAME)
 
     if (!existingAlarm) {
-      browser.alarms.create('bjobs_daily_cleanup_alarm', {
+      browser.alarms.create(STORAGE_CONFIG.CLEAN_ALARM_NAME, {
         periodInMinutes: STORAGE_CONFIG.CLEAN_ALARM_MINUTES,
       })
     }

@@ -1,7 +1,7 @@
 {
   "name": "bjobs-enhancer",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Improve your BDJobs browsing experience.",
   "author": "Shaikh Shafeen <shafeen@duck.com> (https://github.com/kurtnettle)",
   "license": "GPL-3.0-only",
@@ -65,6 +65,7 @@
     "@wxt-dev/module-svelte": "^2.0.5",
     "bits-ui": "^2.18.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.4.0",
     "eslint": "^10.5.0",
     "eslint-plugin-svelte": "^3.19.0",
     "husky": "^9.1.7",

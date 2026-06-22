@@ -120,9 +120,29 @@ async function cleanObsoleteJobIds(): Promise<void> {
     error(TAG, ' Failed to purge obsolete IDs:', e)
   }
 }
+
+async function getObsoleteJobIdsCount(): Promise<number> {
+  const cutoffTime = Date.now() - 24 * 60 * 60 * 1000
+  let itemsRemoved = 0
+
+  try {
+    const currentMap = await hiddenJobsStore.getValue()
+    for (const id in currentMap) {
+      if (currentMap[id].expiresAt < cutoffTime) {
+        itemsRemoved++
+      }
+    }
+  }
+  catch (e) {
+    error(TAG, ' Failed to purge obsolete IDs:', e)
+  }
+  return itemsRemoved
+}
+
 export {
   cleanedJobIdsCount,
   cleanObsoleteJobIds,
+  getObsoleteJobIdsCount,
   hiddenJobCardOpacity,
   hiddenJobIdsCount,
   hideJobById,
