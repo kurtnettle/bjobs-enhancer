@@ -3,13 +3,19 @@
   import * as Card from '$lib/components/ui/card/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
   import * as Select from '$lib/components/ui/select/index.js'
-
+  import { Toaster } from '$lib/components/ui/sonner'
+  import Download from '@lucide/svelte/icons/download'
+  import Upload from '@lucide/svelte/icons/upload'
+  import { onMount } from 'svelte'
+  import { toast } from 'svelte-sonner'
+  import { error } from '@/services/logging'
   import {
     hiddenJobCardOpacity,
     JobCardHideMode,
     jobCardHideModeSetting,
     setHiddenJobCardOpacity,
-  } from '@/services/storage.ts'
+  } from '@/services/storage'
+  import { exportBackup, importBackup } from './utils'
 
   const modes = Object.values(JobCardHideMode) as JobCardHideMode[]
 
@@ -21,13 +27,33 @@
     await setHiddenJobCardOpacity(opacity)
   }
 
+  async function handleRestore() {
+    const restoredData = await importBackup()
+    if (restoredData) {
+      hideMode = restoredData.jobCardHideMode
+      opacity = restoredData.jobCardOpacityValue
+    }
+  }
+
   onMount(async () => {
-    hideMode = await jobCardHideModeSetting.getValue()
-    opacity = await hiddenJobCardOpacity.getValue()
+    try {
+      const [savedHideMode, savedOpacity] = await Promise.all([
+        jobCardHideModeSetting.getValue(),
+        hiddenJobCardOpacity.getValue(),
+      ])
+
+      hideMode = savedHideMode
+      opacity = savedOpacity
+    }
+    catch (err) {
+      error('Failed to load settings from storage:', err)
+      toast.error('Failed to load settings from storage.')
+    }
   })
 </script>
 
 <main>
+  <Toaster richColors duration={5000} position='top-right' expand={true} />
   <Card.Root>
     <Card.Header>
       <Card.Title>Job Card Display Mode</Card.Title>
@@ -71,6 +97,36 @@
               {Math.round(opacity * 100)}%
             </span>
           </div>
+        </div>
+      </div>
+      <div class='p-3'>
+        <h4 class='text-sm font-medium text-foreground/90 mb-1'>
+          Backup & Restore
+        </h4>
+        <p class='text-xs text-muted-foreground mb-4'>
+          Export extension data or restore them from a previous backup file.
+        </p>
+
+        <div class='flex items-center gap-3'>
+          <Button
+            variant='outline'
+            size='sm'
+            onclick={exportBackup}
+            class='gap-2'
+          >
+            <Download class='size-3.5' />
+            Export Backup
+          </Button>
+
+          <Button
+            variant='outline'
+            size='sm'
+            onclick={handleRestore}
+            class='gap-2'
+          >
+            <Upload class='size-3.5' />
+            Restore Backup
+          </Button>
         </div>
       </div>
     </Card.Content>
