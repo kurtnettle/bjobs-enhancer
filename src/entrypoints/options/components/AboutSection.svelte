@@ -16,9 +16,9 @@
 
   const version = browser.runtime.getManifest().version
 
-  let hiddenCount = 0
-  let hiddenJobsCount = 0
-  let cleanedCount = 0
+  let hiddenCount = $state(0)
+  let hiddenJobsCount = $state(0)
+  let cleanedCount = $state(0)
   let jobIdsToRemove = $state(0)
   let nextAutoCleanAt = $state('soon')
 
