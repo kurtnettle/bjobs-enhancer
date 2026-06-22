@@ -53,7 +53,7 @@
           newMap[id] = currentMap[id]
         }
         else {
-          newMap[id] = { hiddenAt: Date.now() }
+          newMap[id] = { expiresAt: Date.now() }
         }
       })
 
