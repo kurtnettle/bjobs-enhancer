@@ -1,6 +1,10 @@
 import { z } from 'zod'
 import { JobCardHideMode } from '../storage'
 
+z.config({
+  jitless: import.meta.env.FIREFOX,
+})
+
 const JobSchema = z.object({
   expiresAt: z.number(),
 })
